@@ -3,17 +3,25 @@ const router = express.Router();
 const {
   createLesson,
   getLessonsByGrade,
-  updateLesson
+  getLessonsByTutor,
+  updateLesson,
+  assignLesson
 } = require('../controllers/lessonController');
-const {protect, restrictToTutor} = require('../middleware/authMiddleware');
+const { protect, authorize } = require('../middleware/authMiddleware');
 
-// POST /api/lessons → Create a new lesson (Tutor only)
-router.post('/', protect, restrictToTutor , createLesson);
+// Tutor creates a lesson with notes/resources
+router.post('/', protect, authorize('tutor'), createLesson);
 
-// GET /api/lessons/grade/:grade → Get lessons by grade (All authenticated users)
-router.get('/grade/:grade', protect, restrictToTutor, getLessonsByGrade);
+// Get lessons by grade (public)
+router.get('/grade/:grade', getLessonsByGrade);
 
-// PUT /api/lessons/:id → Update a lesson (Tutor only)
-router.put('/:id', protect, restrictToTutor, updateLesson);
+// Get lessons created by a tutor
+router.get('/tutor/:tutorId', protect, authorize('tutor','admin'), getLessonsByTutor);
+
+// Update a lesson
+router.put('/:id', protect, authorize('tutor'), updateLesson);
+
+// Assign lesson to children
+router.post('/:id/assign', protect, authorize('tutor'), assignLesson);
 
 module.exports = router;

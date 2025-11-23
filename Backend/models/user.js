@@ -1,17 +1,39 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
-    name: {type: String, required: true},
-    username: {type: String, required: true, unique: true},
-    email: {type: String, required: true, unique: true},
-    password: {type: String, required: true},
-    createdAt: {type: Date, default: Date.now},
-    role: {type: String, enum: ['child', 'tutor', 'parent', 'admin'], required: true},
-    grade:{type: String},
-    tscNumber: { type: String },       // for TSC-registered tutors
-    nationalID: { type: String },      // required for all tutors
-    isVerified: { type: Boolean, default: false }, // admin approval
-    verificationType: { type: String, enum: ['tsc', 'manual'], default: 'manual' }, // how they were verified
-}, {timestamps: true});
+  name: { type: String, required: true },
+  username: { type: String, unique: true, sparse: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
 
-module.exports = mongoose.model('User', userSchema);
+  role: {
+    type: String,
+    enum: ["parent", "child", "tutor", "admin"],
+    required: true,
+  },
+
+  admissionNumber: { type: String, unique: true }, // NEW
+
+  // Parent-specific
+  children: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+
+  // Child-specific
+  parent: { type: mongoose.Schema.Types.ObjectId, ref: "User" }, // NEW
+  enrollments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Enrollment" }],
+  progress: [{ type: mongoose.Schema.Types.ObjectId, ref: "Progress" }],
+
+  // Tutor-specific
+  tutorProfile: {
+    subjects: [String],
+    bio: String,
+    experience: Number,
+    verified: { type: Boolean, default: false },
+    courses: [{ type: mongoose.Schema.Types.ObjectId, ref: "Course" }],
+    students: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }], // optional convenience
+  },
+
+  // Admin-specific
+  isSuperAdmin: { type: Boolean, default: false },
+}, { timestamps: true });
+
+module.exports = mongoose.model("User", userSchema);
