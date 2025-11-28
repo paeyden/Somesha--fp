@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   HomeIcon,
- ArrowRightIcon as LoginIcon, // safer replacement
+  ArrowRightIcon as LoginIcon,
   UserPlusIcon as UserAddIcon,
   Squares2X2Icon as DashboardIcon,
   UserCircleIcon as ProfileIcon,
