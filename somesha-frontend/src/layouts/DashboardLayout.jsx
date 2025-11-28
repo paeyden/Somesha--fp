@@ -4,7 +4,7 @@ import Sidebar from "../components/Sidebar";
 
 const DashboardLayout = ({ children }) => {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen overflow-x-hidden">
       {/* Top Navbar */}
       <Navbar />
 
@@ -13,7 +13,7 @@ const DashboardLayout = ({ children }) => {
         <Sidebar />
 
         {/* Main Content */}
-        <main className="flex-1 bg-gray-100 p-6">
+        <main role="main" className="flex-1 bg-gray-100 px-4 py-6 md:p-6">
           {children}
         </main>
       </div>

@@ -21,17 +21,16 @@ const AddChildToParent = () => {
 
   const handleSubmit = async () => {
     try {
-      // Build payload depending on selection or manual entry
       const payload = manualEntry
         ? { admissionNumber }
         : { childId: selectedChildId };
 
       await addParentToChild(payload);
       alert("Child successfully linked to your account!");
-      // Optionally, refresh children list
+
       const res = await getUserProfile();
       setChildren(res.data.children || []);
-      // Reset form
+
       setSelectedChildId("");
       setAdmissionNumber("");
       setManualEntry(false);
@@ -41,18 +40,23 @@ const AddChildToParent = () => {
   };
 
   return (
-    <div className="bg-white shadow-md rounded-lg p-6 max-w-md mx-auto">
-      <h3 className="text-lg font-semibold text-blue-600 mb-3">
+    <div className="bg-white shadow-md rounded-lg p-6 max-w-md mx-auto mt-6">
+      <h3 className="text-xl font-semibold text-blue-600 mb-4 text-center">
         Link a Child to Your Account
       </h3>
 
-      {/* Dropdown */}
+      {/* Dropdown selection */}
       {!manualEntry && (
         <>
+          <label htmlFor="child-select" className="sr-only">
+            Select a child
+          </label>
           <select
+            id="child-select"
             value={selectedChildId}
             onChange={(e) => setSelectedChildId(e.target.value)}
             className="w-full border border-gray-300 rounded px-3 py-2 mb-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            aria-label="Select a child from your account"
           >
             <option value="">Select a child</option>
             {children.map((child) => (
@@ -64,6 +68,7 @@ const AddChildToParent = () => {
           <p
             className="text-sm text-blue-500 cursor-pointer underline"
             onClick={() => setManualEntry(true)}
+            aria-label="Switch to manual entry for admission number"
           >
             Can’t find your child? Enter admission number
           </p>
@@ -73,16 +78,22 @@ const AddChildToParent = () => {
       {/* Manual entry */}
       {manualEntry && (
         <>
+          <label htmlFor="admission-number" className="sr-only">
+            Enter child admission number
+          </label>
           <input
+            id="admission-number"
             type="text"
             placeholder="Enter child admission number"
             value={admissionNumber}
             onChange={(e) => setAdmissionNumber(e.target.value)}
             className="w-full border border-gray-300 rounded px-3 py-2 mb-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            aria-label="Enter child admission number manually"
           />
           <p
             className="text-sm text-blue-500 cursor-pointer underline"
             onClick={() => setManualEntry(false)}
+            aria-label="Go back to child dropdown"
           >
             Go back to child dropdown
           </p>
@@ -93,6 +104,8 @@ const AddChildToParent = () => {
         onClick={handleSubmit}
         disabled={!selectedChildId && !admissionNumber}
         className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded mt-4 transition-colors disabled:opacity-50"
+        aria-disabled={!selectedChildId && !admissionNumber}
+        aria-label="Link child to your account"
       >
         Link Child
       </button>
