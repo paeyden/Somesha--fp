@@ -122,4 +122,4 @@ If you want improvements (examples, API docs, Postman collection, or CI setup), 
 
 ---
 
-*Generated README — edit or ask me to expand sections with examples or diagrams.*
+
