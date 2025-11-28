@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   HomeIcon,
-  ArrowRightOnRectangleIcon as LoginIcon,
+ ArrowRightIcon as LoginIcon, // safer replacement
   UserPlusIcon as UserAddIcon,
-  ViewGridIcon as DashboardIcon,
+  Squares2X2Icon as DashboardIcon,
   UserCircleIcon as ProfileIcon,
   BookOpenIcon as LessonsIcon,
   ChartBarIcon as StatsIcon,
   UserGroupIcon as UsersIcon,
-  CheckBadgeIcon as VerifyIcon,
+  BadgeCheckIcon as VerifyIcon,
 } from "@heroicons/react/24/outline";
 
 const Sidebar = () => {
