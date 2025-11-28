@@ -2,15 +2,15 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   HomeIcon,
-  LoginIcon,
-  UserAddIcon,
-  DashboardIcon,
-  ProfileIcon,
-  LessonsIcon,
-  StatsIcon,
-  UsersIcon,
-  VerifyIcon,
-} from "@heroicons/react/outline"; // optional: use heroicons or any icons
+  ArrowRightOnRectangleIcon as LoginIcon,
+  UserPlusIcon as UserAddIcon,
+  ViewGridIcon as DashboardIcon,
+  UserCircleIcon as ProfileIcon,
+  BookOpenIcon as LessonsIcon,
+  ChartBarIcon as StatsIcon,
+  UserGroupIcon as UsersIcon,
+  CheckBadgeIcon as VerifyIcon,
+} from "@heroicons/react/24/outline";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -37,7 +37,6 @@ const Sidebar = () => {
     </button>
   );
 
-  // Menu structure
   const menuItems = !token
     ? [
         { label: "Home", path: "/", Icon: HomeIcon },
@@ -75,7 +74,13 @@ const Sidebar = () => {
   return (
     <>
       {/* Mobile overlay */}
-      {isOpen && <div className="fixed inset-0 bg-black/50 z-30 sm:hidden" onClick={toggleSidebar} aria-hidden="true"></div>}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-30 sm:hidden"
+          onClick={toggleSidebar}
+          aria-hidden="true"
+        />
+      )}
 
       {/* Mobile toggle button */}
       <button
@@ -95,13 +100,12 @@ const Sidebar = () => {
           fixed top-0 left-0 h-full bg-gray-800 text-white z-40
           transform transition-transform duration-300
           ${isOpen ? "translate-x-0" : "-translate-x-full"} sm:translate-x-0
-          ${collapsed ? "w-20" : "w-64"} 
+          ${collapsed ? "w-20" : "w-64"}
         `}
         role="navigation"
         aria-label="Main sidebar"
-        onMouseEnter={() => setCollapsed(false)}
-        onMouseLeave={() => setCollapsed(false)}
       >
+        {/* Sidebar header */}
         <div className="flex items-center justify-between p-4">
           <h2 className={`text-xl font-semibold ${collapsed ? "hidden" : ""}`}>Somesha</h2>
           <button
@@ -113,6 +117,7 @@ const Sidebar = () => {
           </button>
         </div>
 
+        {/* Menu */}
         <ul className="space-y-2" role="menu">
           {menuItems.map((item, i) => (
             <li key={i}>
