@@ -9,7 +9,7 @@ import {
   BookOpenIcon as LessonsIcon,
   ChartBarIcon as StatsIcon,
   UserGroupIcon as UsersIcon,
-  BadgeCheckIcon as VerifyIcon,
+  CheckBadgeIcon as VerifyIcon,
 } from "@heroicons/react/24/outline";
 
 const Sidebar = () => {
